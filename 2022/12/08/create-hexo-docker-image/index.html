@@ -5,17 +5,17 @@
   
 
   
-  <title>create-hexo-docker-image | Hexo</title>
+  <title>在Docker上创建一个Hexo镜像 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="在GitHub上写静态博客一般需要用到hexo，但是hexo的环境配置起来很麻烦，而且我也不想把本地环境搞得太乱，于是就用docker做了个镜像，开箱即用。 1. 前期准备 安装好docker，最好添加阿里云的docker镜像源提高下载速度。  新建一个目录，比如 blog，作为接下来操作的主目录。  创建一个 _config.yml文件作为hexo的默认配置，其详细内容如下，必须修改尾部的 de">
 <meta property="og:type" content="article">
-<meta property="og:title" content="create-hexo-docker-image">
+<meta property="og:title" content="在Docker上创建一个Hexo镜像">
 <meta property="og:url" content="http://example.com/2022/12/08/create-hexo-docker-image/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="在GitHub上写静态博客一般需要用到hexo，但是hexo的环境配置起来很麻烦，而且我也不想把本地环境搞得太乱，于是就用docker做了个镜像，开箱即用。 1. 前期准备 安装好docker，最好添加阿里云的docker镜像源提高下载速度。  新建一个目录，比如 blog，作为接下来操作的主目录。  创建一个 _config.yml文件作为hexo的默认配置，其详细内容如下，必须修改尾部的 de">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2022-12-08T15:05:58.000Z">
-<meta property="article:modified_time" content="2022-12-08T16:04:02.951Z">
+<meta property="article:modified_time" content="2022-12-14T12:45:44.063Z">
 <meta property="article:author" content="John Doe">
 <meta property="article:tag" content="Docker">
 <meta name="twitter:card" content="summary">
@@ -81,7 +81,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      create-hexo-docker-image
+      在Docker上创建一个Hexo镜像
     </h1>
   
 
@@ -101,7 +101,7 @@
 </li>
 </ol>
 <h1 id="2-构建镜像"><a href="#2-构建镜像" class="headerlink" title="2. 构建镜像"></a>2. 构建镜像</h1><ol>
-<li><p>创建一个 <code>Dockerfile</code>文件，写入如下内容，其中的”name”和”<a href="mailto:&#110;&#x61;&#x6d;&#101;&#x40;&#99;&#111;&#109;&#112;&#x61;&#x6e;&#x79;&#x2e;&#x63;&#x6f;&#x6d;">&#110;&#x61;&#x6d;&#101;&#x40;&#99;&#111;&#109;&#112;&#x61;&#x6e;&#x79;&#x2e;&#x63;&#x6f;&#x6d;</a>“需要根据自己的GitHub配置修改</p>
+<li><p>创建一个 <code>Dockerfile</code>文件，写入如下内容，其中的”name”和”<a href="mailto:&#x6e;&#97;&#x6d;&#x65;&#x40;&#x63;&#111;&#109;&#112;&#97;&#110;&#x79;&#46;&#x63;&#111;&#109;">&#x6e;&#97;&#x6d;&#x65;&#x40;&#x63;&#111;&#109;&#112;&#97;&#110;&#x79;&#46;&#x63;&#111;&#109;</a>“需要根据自己的GitHub配置修改</p>
 <figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> node</span><br><span class="line"></span><br><span class="line"><span class="keyword">LABEL</span><span class="language-bash"> version=<span class="string">&quot;1.0.0&quot;</span> \</span></span><br><span class="line"><span class="language-bash">    description=<span class="string">&quot;A docker image used as a hexo blog publisher.&quot;</span> \</span></span><br><span class="line"><span class="language-bash">    authors=<span class="string">&quot;name&lt;name@company.com&gt;&quot;</span> \</span></span><br><span class="line"><span class="language-bash">    name=<span class="string">&quot;hexo-node&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">WORKDIR</span><span class="language-bash"> /home/blog</span></span><br><span class="line"><span class="keyword">ENV</span> ARTICLES=/home/blog/articles</span><br><span class="line"><span class="comment"># COPY hexo-deployer-git ./hexo-deployer-git</span></span><br><span class="line"><span class="comment"># COPY hexo-starter ./hexo-starter</span></span><br><span class="line"><span class="comment"># COPY hexo-theme-landscape ./hexo-theme-landscape</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> npm config <span class="built_in">set</span> registry https://registry.npm.taobao.org \</span></span><br><span class="line"><span class="language-bash">    &amp;&amp; npm init -y \</span></span><br><span class="line"><span class="language-bash">    &amp;&amp; npm install -g hexo \</span></span><br><span class="line"><span class="language-bash">    <span class="comment"># 如果网络不好，请将第一个COPY取消注释，再讲下面两行的注释状态对调</span></span></span><br><span class="line">    <span class="comment"># &amp;&amp; npm install --save ./hexo-deployer-git \</span></span><br><span class="line">    &amp;&amp; npm install --save hexo-deployer-git \</span><br><span class="line">    &amp;&amp; mkdir $&#123;ARTICLES&#125; \</span><br><span class="line">    &amp;&amp; cd $&#123;ARTICLES&#125; \</span><br><span class="line">    &amp;&amp; hexo init \</span><br><span class="line">    &amp;&amp; git config --global <span class="keyword">user</span>.email <span class="string">&quot;20255611+GreenhandSW@users.noreply.github.com&quot;</span> \</span><br><span class="line">    &amp;&amp; git config --global <span class="keyword">user</span>.name <span class="string">&quot;name&quot;</span> \</span><br><span class="line">    &amp;&amp; ssh-keygen -t rsa -C <span class="string">&quot;name@company.com&quot;</span> -f <span class="string">&quot;$HOME/.ssh/id_rsa&quot;</span> -P <span class="string">&quot;&quot;</span> &amp;&amp; cat <span class="string">&quot;$HOME/.ssh/id_rsa.pub&quot;</span> \</span><br><span class="line">    &amp;&amp; echo <span class="string">&quot;----------------Image initialized----------------\n\</span></span><br><span class="line"><span class="string">    Please make sure you have bind a volume to /home/blog/articles\</span></span><br><span class="line"><span class="string">     and bind a port to 4000.\n\</span></span><br><span class="line"><span class="string">     You need to copy this public key to your Github Account, \</span></span><br><span class="line"><span class="string">     and for convenience you can name it as HEXO or any name you prefer.\</span></span><br><span class="line"><span class="string">     \n----------------Image initialized----------------\n&quot;</span></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> _config.yml ./articles/.</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">EXPOSE</span> <span class="number">4000</span></span><br><span class="line"><span class="keyword">CMD</span><span class="language-bash"> [<span class="string">&quot;node&quot;</span>]</span></span><br></pre></td></tr></table></figure>
 
 <p>其中 <code>ssh-keygen -t rsa -C &quot;name@company.com&quot; -f &quot;$HOME/.ssh/id_rsa&quot; -P &quot;&quot; &amp;&amp; cat &quot;$HOME/.ssh/id_rsa.pub&quot;</code> 用于不进行交互而直接生成公私钥[^ 1]。</p>
@@ -208,7 +208,7 @@
           </li>
         
           <li>
-            <a href="/2022/12/08/create-hexo-docker-image/">create-hexo-docker-image</a>
+            <a href="/2022/12/08/create-hexo-docker-image/">在Docker上创建一个Hexo镜像</a>
           </li>
         
           <li>
